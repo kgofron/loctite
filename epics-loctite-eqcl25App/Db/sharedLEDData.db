@@ -1,0 +1,234 @@
+record (bo, "$(PREFIX){LOCTITE}:Rst"){
+	field (DTYP, "stream")
+	field (ZNAM, "Normal state")
+	field (ONAM, "Reset")
+	field (OUT, "@infoGathering.proto resetData port")
+}
+
+#Input 1 here to turn all selected channels on
+record (bo, "$(PREFIX){LOCTITE}:ON"){
+	field (DTYP, "stream")
+	field (ZNAM, "Not irradiating")
+	field (ONAM, "Irradiating")
+	field (OUT, "@infoGathering.proto activateSelectedChannels port")
+	field (VAL, 0)
+}
+
+#Input 1 here to turn all selected channels off
+record (bo, "$(PREFIX){LOCTITE}:OFF"){
+	field (DTYP, "stream")
+	field (ZNAM, "Irradiating")
+	field (ONAM, "Not irradiating")
+	field (OUT, "@infoGathering.proto deactivateSelectedChannels port")
+	field (VAL, 0)
+}
+
+#CONNection-IRRAdiation RAW information,
+#as both are initially held in one register.
+#Admittedly, this could be done by mbbo
+record (longin, "$(PREFIX){LOCTITE}:CONNIRRA-Inp"){
+        field (DTYP, "stream")
+        field (INP, "@infoGathering.proto getConnectionAndIrradiationStatus port")
+        field (SCAN, "1 second")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan1}:CONN-RAW"){
+	field (INPA, "$(PREFIX){LOCTITE}:CONNIRRA-Inp")
+	field (CALC, "A AND 1")
+	field (SCAN, "1 second")
+	field (PROC, 1)
+	field (FLNK, "$(PREFIX){LOCTITE:Chan1}:CONN-Sts")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan1}:IRRA-RAW"){
+	field (INPA, "$(PREFIX){LOCTITE}:CONNIRRA-Inp")
+	field (CALC, "(A AND 16) / 16")
+	field (SCAN, "1 second")
+	field (PROC, 1)
+	field (FLNK, "$(PREFIX){LOCTITE:Chan1}:IRRA-Sts")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan1}:CONN-Sts"){
+	field (DESC, "Chan1 Connection Status")
+	field (INP, "$(PREFIX){LOCTITE:Chan1}:CONN-RAW")
+	field (ZNAM, "Not connected")
+	field (ONAM, "Connected")
+	field (SEVR, "NO_ALARM")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan1}:IRRA-Sts"){
+	field (DESC, "Chan1 Irradiation Status")
+	field (INP, "$(PREFIX){LOCTITE:Chan1}:IRRA-RAW")
+	field (ZNAM, "Not irradiating")
+	field (ONAM, "Irradiating")
+	field (SEVR, "NO_ALARM")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan2}:CONN-RAW"){
+        field (INPA, "$(PREFIX){LOCTITE}:CONNIRRA-Inp")
+        field (CALC, "(A AND 2) / 2")
+        field (SCAN, "1 second")
+        field (PROC, 1)
+        field (FLNK, "$(PREFIX){LOCTITE:Chan2}:CONN-Sts")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan2}:IRRA-RAW"){
+        field (INPA, "$(PREFIX){LOCTITE}:CONNIRRA-Inp")
+        field (CALC, "(A AND 32) / 32")
+        field (SCAN, "1 second")
+        field (PROC, 1)
+        field (FLNK, "$(PREFIX){LOCTITE:Chan2}:IRRA-Sts")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan2}:CONN-Sts"){
+        field (DESC, "Chan2 Connection Status")
+        field (INP, "$(PREFIX){LOCTITE:Chan2}:CONN-RAW")
+        field (ZNAM, "Not connected")
+        field (ONAM, "Connected")
+        field (SEVR, "NO_ALARM")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan2}:IRRA-Sts"){
+        field (DESC, "Chan2 Irradiation Status")
+        field (INP, "$(PREFIX){LOCTITE:Chan2}:IRRA-RAW")
+        field (ZNAM, "Not irradiating")
+        field (ONAM, "Irradiating")
+        field (SEVR, "NO_ALARM")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan3}:CONN-RAW"){
+        field (INPA, "$(PREFIX){LOCTITE}:CONNIRRA-Inp")
+        field (CALC, "(A AND 4) / 4")
+        field (SCAN, "1 second")
+        field (PROC, 1)
+        field (FLNK, "$(PREFIX){LOCTITE:Chan3}:CONN-Sts")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan3}:IRRA-RAW"){
+        field (INPA, "$(PREFIX){LOCTITE:Chan3}:CONNIRRA-Inp")
+        field (CALC, "(A AND 64) / 64")
+        field (SCAN, "1 second")
+        field (PROC, 1)
+        field (FLNK, "$(PREFIX){LOCTITE:Chan3}:IRRA-Sts")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan3}:CONN-Sts"){
+        field (DESC, "Chan3 Connection Status")
+        field (INP, "$(PREFIX){LOCTITE:Chan3}:CONN-RAW")
+        field (ZNAM, "Not connected")
+        field (ONAM, "Connected")
+        field (SEVR, "NO_ALARM")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan3}:IRRA-Sts"){
+        field (DESC, "Chan3 Irradiation Status")
+        field (INP, "$(PREFIX){LOCTITE:Chan3}:IRRA-RAW")
+        field (ZNAM, "Not irradiating")
+        field (ONAM, "Irradiating")
+        field (SEVR, "NO_ALARM")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan4}:CONN-RAW"){
+        field (INPA, "$(PREFIX){LOCTITE}:CONNIRRA-Inp")
+        field (CALC, "(A AND 8) / 8")
+        field (SCAN, "1 second")
+        field (PROC, 1)
+        field (FLNK, "$(PREFIX){LOCTITE:Chan4}:CONN-Sts")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan4}:IRRA-RAW"){
+        field (INPA, "$(PREFIX){LOCTITE}:CONNIRRA-Inp")
+        field (CALC, "(A AND 128) / 128")
+        field (SCAN, "1 second")
+        field (PROC, 1)
+        field (FLNK, "$(PREFIX){LOCTITE:Chan4}:IRRA-Sts")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan4}:CONN-Sts"){
+        field (DESC, "Chan4 Connection Status")
+        field (INP, "$(PREFIX){LOCTITE:Chan4}:CONN-RAW")
+        field (ZNAM, "Not connected")
+        field (ONAM, "Connected")
+        field (SEVR, "NO_ALARM")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan4}:IRRA-Sts"){
+        field (DESC, "Chan4 Irradiation Status")
+        field (INP, "$(PREFIX){LOCTITE:Chan4}:IRRA-RAW")
+        field (ZNAM, "Not irradiating")
+        field (ONAM, "Irradiating")
+        field (SEVR, "NO_ALARM")
+}
+
+#Temperature WARNing Output
+record (longin, "$(PREFIX){LOCTITE}:T-WARN-Inp"){
+	field (DTYP, "stream")
+	field (INP, "@infoGathering.proto getTemperatureWarnings port")
+	field (SCAN, "1 second")
+}
+
+#RAW Channel 1 Temperature WARNing
+record (calcout, "$(PREFIX){LOCTITE:Chan1}:T-WARN-RAW"){
+	field (INPA, "$(PREFIX){LOCTITE}:T-WARN-Inp")
+	field (CALC, "A AND 1")
+	field (PROC, 1)
+	field (SCAN, "1 second")
+	field (FLNK, "$(PREFIX){LOCTITE:Chan1}:T-WARN-Sts")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan1}:T-WARN-Sts"){
+	field (DESC, "Chan1 Temperature Warning Status")
+	field (INP, "$(PREFIX){LOCTITE:Chan1}:T-WARN-RAW")
+	field (ZNAM, "Temp Warning Off")
+	field (ONAM, "Temp Warning On")
+	field (SEVR, "NO_ALARM")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan2}:T-WARN-RAW"){
+        field (INPA, "$(PREFIX){LOCTITE}:T-WARN-Inp")
+        field (CALC, "A AND 2")
+        field (PROC, 1)
+        field (SCAN, "1 second")
+        field (FLNK, "$(PREFIX){LOCTITE:Chan2}:T-WARN-Sts")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan2}:T-WARN-Sts"){
+        field (DESC, "Chan1 Temperature Warning Status")
+        field (INP, "$(PREFIX){LOCTITE:Chan2}:T-WARN-RAW")
+        field (ZNAM, "Temp Warning Off")
+        field (ONAM, "Temp Warning On")
+        field (SEVR, "NO_ALARM")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan3}:T-WARN-RAW"){
+        field (INPA, "$(PREFIX){LOCTITE}:T-WARN-Inp")
+        field (CALC, "A AND 4")
+        field (PROC, 1)
+        field (SCAN, "1 second")
+        field (FLNK, "$(PREFIX){LOCTITE:Chan3}:T-WARN-Sts")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan3}:T-WARN-Sts"){
+        field (DESC, "Chan1 Temperature Warning Status")
+        field (INP, "$(PREFIX){LOCTITE:Chan3}:T-WARN-RAW")
+        field (ZNAM, "Temp Warning Off")
+        field (ONAM, "Temp Warning On")
+        field (SEVR, "NO_ALARM")
+}
+
+record (calcout, "$(PREFIX){LOCTITE:Chan4}:T-WARN-RAW"){
+        field (INPA, "$(PREFIX){LOCTITE}:T-WARN-Inp")
+        field (CALC, "A AND 1")
+        field (PROC, 1)
+        field (SCAN, "1 second")
+        field (FLNK, "$(PREFIX){LOCTITE:Chan4}:T-WARN-Sts")
+}
+
+record (bi, "$(PREFIX){LOCTITE:Chan4}:T-WARN-Sts"){
+        field (DESC, "Chan1 Temperature Warning Status")
+        field (INP, "$(PREFIX){LOCTITE:Chan4}:T-WARN-RAW")
+        field (ZNAM, "Temp Warning Off")
+        field (ONAM, "Temp Warning On")
+        field (SEVR, "NO_ALARM")
+}
+

@@ -1,0 +1,107 @@
+#To read current channel of LED intensity
+record (longin, "$(PREFIX)$(CHNM):INT-Out") {
+	field (DESC, "Current $(CHNM) Intensity %")
+	field (DTYP, "stream")
+	field (INP, "@infoGathering.proto getIntensity($(RINTENADDR)) port")
+	field (SEVR, "NO_ALARM")
+}
+
+#To change LED intensity for each channel
+#Entered as a percentage from 0%-100%
+record (longout, "$(PREFIX)$(CHNM):INT-Inp") {
+	field (DESC, "New $(CHNM) Intensity %")
+	field (DTYP, "stream")
+	field (OUT, "@infoGathering.proto setIntensity($(RINTENADDR),$(WINTENADDR)) port")
+	field (FLNK, "$(PREFIX)$(CHNM):INT-Out")
+	field (SEVR, "NO_ALARM")
+}
+
+#Where the time of irradiation is read from the command line
+#It is raw because the lower word is before the upper word
+#So the data is not directly a number
+record (stringin, "$(PREFIX)$(CHNM):TIME-Out"){
+	field (DESC, "Time of $(CHNM) irradiation")
+	field (DTYP, "stream")
+	field (INP, "@infoGathering.proto getCh1IrradiationTime($(RTIMEADDR)) port")
+	field (SCAN, "1 second")
+	field (FLNK, "$(PREFIX)$(CHNM):TIME")
+}
+
+#Where one would read time a LED shines for if conencted to a channel.
+record (scalcout, "$(PREFIX)$(CHNM):TIME"){
+	field (DESC, "Time of $(CHNM) irradiation")
+	field (INAA, "$(PREFIX)$(CHNM):TIME-Out")
+	field (CALC, "sscanf(AA, \"%2X%*2X\") + sscanf(AA, \"%*2X%2X\") * 256")
+	field (SEVR, "NO_ALARM")
+}
+
+#Where one would input irradiation time
+#9999 means that the irradiation is continous
+#Otherwise, the irradiation is 0.1 * entered value,
+#from 0-9990. Lowerword-upperword switch happens here too
+record (longout, "$(PREFIX)$(CHNM):TIME-NEW-RAW"){
+	field (DESC, "New $(CHNM) irradiation time")
+	field (SCAN, "1 second")
+	field (FLNK, "$(PREFIX)$(CHNM):TIME-NEW-PROC")
+}
+
+#To rearrange the time so that it fits the format
+#of LocTite communication
+#Example: 9999/continuous is 270F in base 16, must be switched to 0F27
+#or 3879 in base 10.
+record (calcout, "$(PREFIX)$(CHNM):TIME-NEW-PROC"){
+	field (DESC, "New ${CHNM} irradiation time")
+	field (INPA, "$(PREFIX)$(CHNM):TIME-NEW-RAW")
+	field (CALC, "((A % 256) * 256) + A / 256")
+	field (OUT, "$(PREFIX)$(CHNM):TIME-Inp")
+	field (FLNK, "$(PREFIX)$(CHNM):TIME-Inp")
+}
+
+#To send out the command of changing time
+#using the transformed time.
+record (longout, "$(PREFIX)$(CHNM):TIME-Inp"){
+	field (DESC, "New $(CHNM) irradiation time")
+	field (DTYP, "stream")
+	field (OUT, "@infoGathering.proto setCh1IrradiationTime($(WTIMEADDR)) port")
+	field (FLNK, "$(PREFIX)$(CHNM):TIME-Out")
+}
+
+#The temperature of the LED head
+#with reversed upper word and lower word
+record (stringin, "$(PREFIX)$(CHNM):T-Out"){
+	field (DESC, "$(CHNM) LED Head Temperature")
+	field (DTYP, "stream")
+	field (INP, "@infoGathering.proto getLEDHeadTemp($(TEMPADDR)) port")
+	field (SCAN, "1 second")
+	field (FLNK, "$(PREFIX)$(CHNM):T")
+}
+
+record (scalcout, "$(PREFIX)$(CHNM):T"){
+	field (DESC, "$(CHNM) LED Head Temperature")
+	field (INAA, "$(PREFIX)$(CHNM):T-Out")
+	field (CALC, "(sscanf(AA, \"%2X%*2X\") + sscanf(AA, \"%*2X%2X\") * 256) / 10")
+	field (PROC, 1)
+	field (EGU, "degrees C")
+	field (SEVR, "NO_ALARM")
+}
+
+record (bo, "$(PREFIX)$(CHNM):SW-Out"){
+	field (DESC, "Selection of $(CHNM)")
+        field (VAL, "0")
+        field (PINI, "YES")
+	field (DTYP, "stream")
+	field (OUT, "@infoGathering.proto selectChannel($(SELADDR)) port")
+	field (ZNAM, "Will not be selected")
+	field (ONAM, "Will be selected")
+	field (FLNK, "$(PREFIX)$(CHNM):SW-Sts")
+}
+
+record (bi, "$(PREFIX)$(CHNM):SW-Sts"){
+	field (DESC, "Selection Status of $(CHNM)")
+	field (DTYP, "stream")
+	field (INP, "@infoGathering.proto realSelectionStatus($(SELSTATADDR)) port")
+	field (ZNAM, "Not selected")
+	field (ONAM, "Selected")
+	field (SEVR, "NO_ALARM")
+	field (SCAN, "1 second")
+}

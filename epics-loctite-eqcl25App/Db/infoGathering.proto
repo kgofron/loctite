@@ -1,0 +1,117 @@
+OutTerminator = CR LF;
+InTerminator = CR;
+
+getIntensity {
+	out "<02#RDD0\$10\$1**";
+	in "<02$RD%2X%*s";
+	@init {
+		out "<02#RDD0\$10\$1**"; 
+		in "<02$RD%2X%*X";
+	}
+}
+
+setIntensity {
+	out "<02#WDD0\$20\$2%2X00**";
+	in "<02$WD09";
+	out "<02#WDD08619086190100**";
+	in "<02$WD09";
+	getIntensity;
+}
+
+getCh1IrradiationTime {
+	out "<02#RDD0\$10\$1**";
+	in "<02$RD%4s%*X";
+	@init {
+        	out "<02#RDD0\$10\$1**";
+	        in "<02$RD%4s%*X";
+	}
+}
+
+setCh1IrradiationTime {
+	out "<02#WDD0\$10\$1%4X**";
+	in "<02$WD09";
+	out "<02#WDD08619086190100**";
+	in "<02$WD09";
+}
+
+getCh1OnOrOff {
+	out "<02#RDD0\$10\$1**";
+	in "<02$RD%2X%*X";
+        @init {
+                out "<02#RDD0\$10\$1**";
+                in "<02$RD%2X%*X";
+        }
+}
+
+setCh1OnOrOff {
+        out "<02#WDD0\$10\$1%2X00**";
+        in "<02$WD09";
+        getCh1OnOrOff;
+}
+
+getLEDHeadTemp {
+        out "<02#RDD0\$10\$1**";
+        in "<02$RD%4s%*X";
+        @init {
+                out "<02#RDD0\$10\$1**";
+                in "<02$RD%4s%*X";
+        }
+}
+
+getConnectionAndIrradiationStatus {
+	out "<02#RDD0506005060**";
+	in "<02$RD%2X%*X";
+	@init {
+		out "<02#RDD0506005060**";
+		in "<02$RD%2X%*X";
+	}
+}
+
+getTemperatureWarnings {
+	out "<02#RDD0506205062**";
+	in "<02$RD%2X%*X";
+	@init {
+		out "<02#RDD0506205062**";
+		in "<02$RD%2X%*X";
+	}
+}
+
+resetData {
+	out "<02#WDD07005070050100**";
+	in "<02$WD09";
+	out "<02#RDD0700507005**";
+	in "<02$RD%2X%*X";
+	@init {
+		out "<02#RDD0700507005**";
+		in "<02$RD%2X%*X"
+	}
+}
+
+realSelectionStatus {
+	out "<02#RDD0\$10\$1**";
+	in "<02$RD%2X%*X";
+	@init{
+		out "<02#RDD0\$10\$1**";
+		in "<02$RD%2X%*X";
+	}
+}
+
+
+selectChannel {
+	out "<02#WDD0\$10\$10%X00**";
+	in "<02$WD09";
+	out "<02#WDD08738087381000**";
+	in "<02$WD09";
+}
+
+activateSelectedChannels {
+	out "<02#WDD07018070180%X00**";
+	in "<02$WD09";
+}
+
+deactivateSelectedChannels {
+	out "<02#WDD08510085100%X00**";
+	in "<02$WD09";
+}
+
+

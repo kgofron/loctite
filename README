@@ -1,0 +1,55 @@
+How to operate the LocTite EQCL25 as given:
+
+- It requires a MOXA NPort 5150, a normal RS-232 female/female modem,
+  and an ethernet cable.  The LocTite machine will also need 
+  the associated LocTite LEDs.
+
+- The MOXA NPort 5150 uses IP address 192.168.127.254. 
+  By default, port 4001 will be used to talk to the LocTite.
+  The LocTite machine is also controllable through telnet
+  by connecting to the IP address 192.168.127.254, port 4001.
+
+- 1. Configure the MOXA NPort 5150 to have 38400 Baud rate,
+  data length 8, 1 stop bit, and no flow control under Serial Settings. 
+  
+  2. Put the MOXA NPort 5150 in TCP Client Mode, with no packing length,
+  no delimiter usage, and no force transmit in Operating Settings.
+
+  3. The rest of the settings can be the same.
+
+  Configuring these settings is also available through telnet
+  by connecting to the IP address 192.168.127.254.
+
+
+
+Then the LocTite EQCL25 should work.
+
+The intensity is given as a percent. It can go high as 255%.
+However, it is not more powerful than 100%. Anything higher than
+255% will not changet the intensity percentage and will cause 
+an unseen error.
+
+The irradiation time is given as an entered number * 0.1 s
+and can go as high as 9990.  However, entering 9999 means 
+the irradiation is continuous.  Entering anything other than
+0-9990 or 9999 will not change irradiation.
+
+The default temperature for the irradiation is degrees Celsius.
+
++----------------IMPORTANT-----------------+
+|The LocTite takes one group of LEDs,      | 
+|makes them irradiate,                     |
+|and upon turning the lights off and       |
+|unselecting a channel, all channels become|
+|unselected.                               |
++------------------------------------------+
+
+To silence the machine except for error messages, 
+connect through telnet to the LocTite machine and type in:
+"<02#WDD0872408724FEFF**",
+"<02#WDD08739087394000**"
+
+To unsilence the machine, connect through telnet 
+to the LocTite machine and type in:
+"<02#WDD08724087240000**",
+"<02#WDD08739087394000**"

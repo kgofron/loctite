@@ -1,0 +1,3 @@
+record (stringin, "Usefulness_Indicator") {
+    field (VAL, "tHIS VALUE INDICATES USEFULNESS")
+}
