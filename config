@@ -1,6 +1,7 @@
 NAME=loctite
 PORT=6003
 USER=softioc
-HOST=xf11id-m1
+HOST=lob4-mobile3
+#HOST=xf11id-m1
 CHDIR="$CHDIR/iocBoot/iocepics-loctite-eqcl25"
 EXEC="$CHDIR/st.cmd"

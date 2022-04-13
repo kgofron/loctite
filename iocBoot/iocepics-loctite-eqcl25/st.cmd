@@ -4,13 +4,22 @@
 ## everywhere it appears in this file
 
 < envPaths
+< /epics/common/xf11id-m3-netsetup.cmd
+
+## Location of stream protocol files
+epicsEnvSet("ENGINEER",  "kgofron x5283")
+epicsEnvSet("LOCATION",  "XF11ID-M3")
+epicsEnvSet("SYSPORT",   "LOCTITE")
+epicsEnvSet("TSADR",     "192.168.11.62")
+
 epicsEnvSet("STREAM_PROTOCOL_PATH", "$(TOP)/epics-loctite-eqcl25App/Db")
 
 ## Register all support components
 dbLoadDatabase("../../dbd/loctite-chx-led.dbd",0,0)
 loctite_chx_led_registerRecordDeviceDriver(pdbbase) 
 
-drvAsynIPPortConfigure("port", "192.168.1.139:4001")
+#drvAsynIPPortConfigure("port", "192.168.1.139:4001")   # mobile1
+drvAsynIPPortConfigure("$(SYSPORT)", "192.168.11.62:4001")    
 
 ## Load record instances
 #CHNM = CHannel NaMe
@@ -24,14 +33,13 @@ drvAsynIPPortConfigure("port", "192.168.1.139:4001")
 #RTIMEADDR = Reading irradiation TIME ADDRess
 #WTIMEADDR = Writing irradiation TIME ADDRess
 
-
 #dbLoadRecords("../../db/loctite-chx-led.db","user=student")
 #dbLoadRecords("../../loctite-chx-ledApp/Db/practice.db")
 #dbLoadRecords("../../loctite-chx-ledApp/Db/ledData.db", "CHNM=Ch1,RINTENADDR=5104,WINTENADDR=7104,SELADDR=7100,TEMPADDR=5070,STADDR=8500,RTIMEADDR=5105,WTIMEADDR=7105")
 #dbLoadRecords("../../loctite-chx-ledApp/Db/ledData.db", "CHNM=Ch2,RINTENADDR=5105,WINTENADDR=7106,SELADDR=7101,TEMPADDR=5071,STADDR=8501,RTIMEADDR=5107,WTIMEADDR=7107")
 #dbLoadTemplate("../../loctite-chx-ledApp/Db/ledData.substitutions")
-dbLoadRecords("$(TOP)/db/sharedLEDData.db", "PREFIX=XF:11ID")
-dbLoadRecords("$(TOP)/db/ledData.db", "PREFIX=XF:11ID")
-
+dbLoadRecords("$(TOP)/db/sharedLEDData.db", "PREFIX=XF:11ID,PORT=$(SYSPORT),A=0")
+#dbLoadRecords("$(TOP)/db/ledData.db", "PREFIX=XF:11ID")
+dbLoadRecords("$(TOP)/db/ledData.db", "PREFIX=XF:11ID,PORT=$(SYSPORT),A=0")
 
 iocInit()

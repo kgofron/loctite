@@ -17,21 +17,21 @@ loctite-chx-led_DBD += base.dbd
 
 # Include dbd files from all support applications:
 #loctite-chx-led_DBD += xxx.dbd
-loctite-chx-led_DBD += stream.dbd
 loctite-chx-led_DBD += asyn.dbd
 loctite-chx-led_DBD += drvAsynIPPort.dbd
 loctite-chx-led_DBD += calcSupport.dbd
+loctite-chx-led_DBD += stream.dbd
 #loctite-chx-led_DBD += sCalcoutRecord.dbd ##this line commented out
 #loctite-chx-led_DBD += streamSynApps.dbd
 #loctite-chx-led_DBD += streamApp.dbd
 
 # Add all the support libraries needed by this IOC
 #loctite-chx-led_LIBS += xxx
-loctite-chx-led_LIBS += stream
 loctite-chx-led_LIBS += asyn
 #loctite-chx-led_LIBS += pcre
 loctite-chx-led_LIBS += sscan
 loctite-chx-led_LIBS += calc
+loctite-chx-led_LIBS += stream
 
 # loctite-chx-led_registerRecordDeviceDriver.cpp derives from loctite-chx-led.dbd
 loctite-chx-led_SRCS += loctite-chx-led_registerRecordDeviceDriver.cpp

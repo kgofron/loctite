@@ -2,7 +2,7 @@
 record (longin, "$(PREFIX)$(CHNM):INT-Out") {
 	field (DESC, "Current $(CHNM) Intensity %")
 	field (DTYP, "stream")
-	field (INP, "@infoGathering.proto getIntensity($(RINTENADDR)) port")
+	field (INP, "@infoGathering.proto getIntensity($(RINTENADDR)) $(PORT)")
 	field (SEVR, "NO_ALARM")
 }
 
@@ -11,7 +11,7 @@ record (longin, "$(PREFIX)$(CHNM):INT-Out") {
 record (longout, "$(PREFIX)$(CHNM):INT-Inp") {
 	field (DESC, "New $(CHNM) Intensity %")
 	field (DTYP, "stream")
-	field (OUT, "@infoGathering.proto setIntensity($(RINTENADDR),$(WINTENADDR)) port")
+	field (OUT, "@infoGathering.proto setIntensity($(RINTENADDR),$(WINTENADDR)) $(PORT)")
 	field (FLNK, "$(PREFIX)$(CHNM):INT-Out")
 	field (SEVR, "NO_ALARM")
 }
@@ -22,7 +22,7 @@ record (longout, "$(PREFIX)$(CHNM):INT-Inp") {
 record (stringin, "$(PREFIX)$(CHNM):TIME-Out"){
 	field (DESC, "Time of $(CHNM) irradiation")
 	field (DTYP, "stream")
-	field (INP, "@infoGathering.proto getCh1IrradiationTime($(RTIMEADDR)) port")
+	field (INP, "@infoGathering.proto getCh1IrradiationTime($(RTIMEADDR)) $(PORT)")
 	field (SCAN, "1 second")
 	field (FLNK, "$(PREFIX)$(CHNM):TIME")
 }
@@ -62,7 +62,7 @@ record (calcout, "$(PREFIX)$(CHNM):TIME-NEW-PROC"){
 record (longout, "$(PREFIX)$(CHNM):TIME-Inp"){
 	field (DESC, "New $(CHNM) irradiation time")
 	field (DTYP, "stream")
-	field (OUT, "@infoGathering.proto setCh1IrradiationTime($(WTIMEADDR)) port")
+	field (OUT, "@infoGathering.proto setCh1IrradiationTime($(WTIMEADDR)) $(PORT)")
 	field (FLNK, "$(PREFIX)$(CHNM):TIME-Out")
 }
 
@@ -71,7 +71,7 @@ record (longout, "$(PREFIX)$(CHNM):TIME-Inp"){
 record (stringin, "$(PREFIX)$(CHNM):T-Out"){
 	field (DESC, "$(CHNM) LED Head Temperature")
 	field (DTYP, "stream")
-	field (INP, "@infoGathering.proto getLEDHeadTemp($(TEMPADDR)) port")
+	field (INP, "@infoGathering.proto getLEDHeadTemp($(TEMPADDR)) $(PORT)")
 	field (SCAN, "1 second")
 	field (FLNK, "$(PREFIX)$(CHNM):T")
 }
@@ -90,7 +90,7 @@ record (bo, "$(PREFIX)$(CHNM):SW-Out"){
         field (VAL, "0")
         field (PINI, "YES")
 	field (DTYP, "stream")
-	field (OUT, "@infoGathering.proto selectChannel($(SELADDR)) port")
+	field (OUT, "@infoGathering.proto selectChannel($(SELADDR)) $(PORT)")
 	field (ZNAM, "Will not be selected")
 	field (ONAM, "Will be selected")
 	field (FLNK, "$(PREFIX)$(CHNM):SW-Sts")
@@ -99,7 +99,7 @@ record (bo, "$(PREFIX)$(CHNM):SW-Out"){
 record (bi, "$(PREFIX)$(CHNM):SW-Sts"){
 	field (DESC, "Selection Status of $(CHNM)")
 	field (DTYP, "stream")
-	field (INP, "@infoGathering.proto realSelectionStatus($(SELSTATADDR)) port")
+	field (INP, "@infoGathering.proto realSelectionStatus($(SELSTATADDR)) $(PORT)")
 	field (ZNAM, "Not selected")
 	field (ONAM, "Selected")
 	field (SEVR, "NO_ALARM")

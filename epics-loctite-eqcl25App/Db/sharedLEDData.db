@@ -2,7 +2,7 @@ record (bo, "$(PREFIX){LOCTITE}:Rst"){
 	field (DTYP, "stream")
 	field (ZNAM, "Normal state")
 	field (ONAM, "Reset")
-	field (OUT, "@infoGathering.proto resetData port")
+	field (OUT, "@infoGathering.proto resetData $(PORT)")
 }
 
 #Input 1 here to turn all selected channels on
@@ -10,7 +10,7 @@ record (bo, "$(PREFIX){LOCTITE}:ON"){
 	field (DTYP, "stream")
 	field (ZNAM, "Not irradiating")
 	field (ONAM, "Irradiating")
-	field (OUT, "@infoGathering.proto activateSelectedChannels port")
+	field (OUT, "@infoGathering.proto activateSelectedChannels $(PORT)")
 	field (VAL, 0)
 }
 
@@ -19,7 +19,7 @@ record (bo, "$(PREFIX){LOCTITE}:OFF"){
 	field (DTYP, "stream")
 	field (ZNAM, "Irradiating")
 	field (ONAM, "Not irradiating")
-	field (OUT, "@infoGathering.proto deactivateSelectedChannels port")
+	field (OUT, "@infoGathering.proto deactivateSelectedChannels $(PORT)")
 	field (VAL, 0)
 }
 
@@ -28,7 +28,7 @@ record (bo, "$(PREFIX){LOCTITE}:OFF"){
 #Admittedly, this could be done by mbbo
 record (longin, "$(PREFIX){LOCTITE}:CONNIRRA-Inp"){
         field (DTYP, "stream")
-        field (INP, "@infoGathering.proto getConnectionAndIrradiationStatus port")
+        field (INP, "@infoGathering.proto getConnectionAndIrradiationStatus $(PORT)")
         field (SCAN, "1 second")
 }
 
@@ -163,7 +163,7 @@ record (bi, "$(PREFIX){LOCTITE:Chan4}:IRRA-Sts"){
 #Temperature WARNing Output
 record (longin, "$(PREFIX){LOCTITE}:T-WARN-Inp"){
 	field (DTYP, "stream")
-	field (INP, "@infoGathering.proto getTemperatureWarnings port")
+	field (INP, "@infoGathering.proto getTemperatureWarnings $(PORT)")
 	field (SCAN, "1 second")
 }
 

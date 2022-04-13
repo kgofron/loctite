@@ -19,16 +19,19 @@
 # Build settings that are NOT module paths should appear in a
 # CONFIG_SITE file.
 
+SUPPORT=/epics/src/RHEL8/support
+
 TEMPLATE_TOP=$(EPICS_BASE)/templates/makeBaseApp/top
 
 # If using the sequencer, point SNCSEQ at its top directory:
 #SNCSEQ=$(EPICS_BASE)/../modules/soft/seq
+ASYN=$(SUPPORT)/asyn
+CALC=$(SUPPORT)/calc
+STREAM=$(SUPPORT)/stream
+SSCAN=$(SUPPORT)/sscan
 
 # EPICS_BASE usually appears last so other apps can override stuff:
-EPICS_BASE=/usr/lib/epics
-ASYN=/usr/lib/epics
-CALC=/usr/lib/epics
-STREAM=/usr/lib/epics
+EPICS_BASE = $(SUPPORT)/../base
 
 # Set RULES here if you want to take build rules from somewhere
 # other than EPICS_BASE:
